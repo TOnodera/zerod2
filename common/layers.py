@@ -1,6 +1,6 @@
 from nptyping import NDArray
 import numpy as np
-import functions
+from . import functions
 
 class MatMul:
     def __init__(self, W: NDArray) -> None:
