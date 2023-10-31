@@ -3,7 +3,6 @@ import sys
 sys.path.append("..")
 from nptyping import NDArray
 import numpy as np
-import time
 from common import utils
 import matplotlib.pyplot as plt
 
