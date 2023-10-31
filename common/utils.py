@@ -91,11 +91,6 @@ def ppmi(C: NDArray, verbose: bool = False, eps = 1e-8):
     total = C.shape[0] * C.shape[1]
     cnt = 0
     
-    print("="*10+"S"+"="*10)
-    print(S)
-    print("="*10+"N"+"="*10)
-    print(N)
-
     for i in range(C.shape[0]):
         for j in range(C.shape[1]):
             pmi = np.log2(C[i, j] * N / (S[j]*S[i]) + eps)
