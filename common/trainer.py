@@ -21,7 +21,7 @@ class Trainer:
         model, optimizer = self.model, self.optimizer
         total_loss = 0
         loss_count = 0
-
+        
         for epoch in range(max_epoch):
             idx = np.random.permutation(np.arange(data_size))
             x = x[idx]
@@ -41,6 +41,7 @@ class Trainer:
                 total_loss += loss
                 loss_count += 1
 
+                print(iters, eval_interval, iters % eval_interval)
                 if (eval_interval is not None) and (iters % eval_interval) == 0:
                     avg_loss = total_loss / loss_count                  
                     self.loss_list.append(avg_loss)
