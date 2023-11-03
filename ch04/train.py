@@ -1,15 +1,14 @@
 import sys
 sys.path.append('../')
-# from common import config
-# config.GPU = True
+from common import config
+config.GPU = True
 import pickle
-from common.np import GPU
 from common.trainer import Trainer
 from common.optimizers import Adam
 from cbow import Cbow
 from common import utils
 from dataset import ptb
-import numpy as np
+from common.np import *
 
 
 # ハイパーパラメータの設定
@@ -23,7 +22,7 @@ corpus, word_to_id, id_to_word = ptb.load_data('train')
 vocab_size = len(word_to_id)
 
 contexts, target = utils.create_contexts_target(corpus, window_size)
-if GPU:
+if config.GPU:
     contexts, target = utils.to_gpu(contexts), utils.to_gpu(target)
 
 # モデルなど生成
@@ -32,11 +31,12 @@ optimizer = Adam()
 trainer = Trainer(model, optimizer)
 
 trainer.fit(contexts, target, max_epoch, batch_size)
-trainer.plot()
+# trainer.plot()
+
 
 word_vecs = model.word_vecs
 
-if GPU:
+if config.GPU:
     word_vecs = utils.to_gpu(word_vecs)
 
 params = {}

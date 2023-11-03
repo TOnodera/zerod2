@@ -1,10 +1,9 @@
 
 import sys
 sys.path.append("..")
-from nptyping import NDArray
-import numpy as np
 from common import utils
 import matplotlib.pyplot as plt
+from .np import *
 
 class Trainer:
     def __init__(self, model, optimizer) -> None:
@@ -14,7 +13,7 @@ class Trainer:
         self.evel_intervel = None
         self.current_epoch = 0
 
-    def fit(self, x: NDArray, t: NDArray, max_epoch=10, batch_size=32, max_grad=None, eval_interval=20):
+    def fit(self, x, t, max_epoch=10, batch_size=32, max_grad=None, eval_interval=20):
         data_size = len(x)
         max_iters = data_size // batch_size
         self.eval_interval = eval_interval
@@ -41,7 +40,7 @@ class Trainer:
                 total_loss += loss
                 loss_count += 1
 
-                print(iters, eval_interval, iters % eval_interval)
+                print(epoch, iters, total_loss)
                 if (eval_interval is not None) and (iters % eval_interval) == 0:
                     avg_loss = total_loss / loss_count                  
                     self.loss_list.append(avg_loss)

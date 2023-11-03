@@ -1,6 +1,6 @@
 import sys
 sys.path.append("../")
-import numpy as np
+from common.np import * 
 from common.layers import Embedding, NegativeSamplingLoss
 from nptyping import NDArray
 
@@ -27,7 +27,7 @@ class Cbow:
             
         self.word_vecs = W_in
         
-    def forward(self, contexts: NDArray, target: NDArray):
+    def forward(self, contexts, target):
         h = 0
         for i, layer in enumerate(self.in_layers):
             h += layer.forward(contexts[:,i])

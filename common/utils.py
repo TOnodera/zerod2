@@ -1,7 +1,6 @@
-import numpy as np
 from nptyping import NDArray
 import collections
-from np import GPU 
+from .np import *
 
 def clip_grads(grads, max_norm):
     total_norm = 0
@@ -31,7 +30,7 @@ def preprocess(text: str) -> (NDArray, dict, dict):
     
     return corpus, word_to_id, id_to_word
 
-def create_co_matrix(corpus: NDArray, vocab_size: int, window_size: int = 1) -> NDArray:
+def create_co_matrix(corpus, vocab_size: int, window_size: int = 1) -> NDArray:
     """
     共起行列を生成する
     """
@@ -53,7 +52,7 @@ def create_co_matrix(corpus: NDArray, vocab_size: int, window_size: int = 1) -> 
 
     return co_matrix
 
-def co_simirarity(x: NDArray, y: NDArray, eps: float = 1e-8) -> float:
+def co_simirarity(x, y, eps: float = 1e-8) -> float:
     """
     コサイン類似度を算出
     """
@@ -62,7 +61,7 @@ def co_simirarity(x: NDArray, y: NDArray, eps: float = 1e-8) -> float:
     
     return np.dot(nx, ny)
 
-def most_similar(query: str, word_to_id: dict, id_to_word: dict, word_matrix: NDArray, top=5):
+def most_similar(query: str, word_to_id: dict, id_to_word: dict, word_matrix, top=5):
     if query not in word_to_id:
         print("%s is not found" % query)
         return
@@ -86,7 +85,7 @@ def most_similar(query: str, word_to_id: dict, id_to_word: dict, word_matrix: ND
         if count >= top:
             return
         
-def ppmi(C: NDArray, verbose: bool = False, eps = 1e-8):
+def ppmi(C, verbose: bool = False, eps = 1e-8):
     M = np.zeros_like(C, dtype=np.float32)
     N = np.sum(C)
     S = np.sum(C, axis=0)
@@ -104,7 +103,7 @@ def ppmi(C: NDArray, verbose: bool = False, eps = 1e-8):
                     
     return M
 
-def create_contexts_target(corpus: NDArray, window_size: int=1):
+def create_contexts_target(corpus, window_size: int=1):
     target = corpus[window_size:-window_size]
     contexts = []
     for idx in range(window_size, len(corpus)-window_size):
