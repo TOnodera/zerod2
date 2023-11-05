@@ -1,6 +1,6 @@
 from .np import *
-import layers
-import functions
+from . import layers
+from . import functions
 
 class RNN:
     def __init__(self, Wx, Wh, b) -> None:

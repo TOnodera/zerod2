@@ -102,7 +102,10 @@ class Embedding:
     def backward(self, dout) -> None:
         dW, = self.grads
         dW[...] = 0
-        cupyx.scatter_add(dW, self.idx, dout)
+        if GPU:
+            np.scatter_add(dW, self.idx, dout)
+        else:
+            np.add.at(dW, self.idx, dout)
         
         
 class EmbeddingDot:
